@@ -20,12 +20,24 @@ function draw() {
   
   //Werte benutzen um Attribute festzulegen
   strokeWeight(s);
-  fill(255, 255, 255);
-  stroke(71, 99, 71);
+  fill(27, 165, 245, 100);
+  stroke(245, 27, 123);
   
-  //Ellipsen zeichnen
-  triangle(width/2, height/2, groesse, height-200);  
- triangle(width/2, height/2, height-200, groesse);
+// triangle(-20, 25, 8, -30, 36, 25); funktioniert nicht wegen zentrum da es fixe punkte sind
+
+
+  triangle(
+    width/2, height/2 - groesse,      // oben
+    width/2 - groesse, height/2 + groesse,  // links unten
+    width/2 + groesse, height/2 + groesse   // rechts unten
+  );
+  
+  // Zweites Dreieck – nach unten gerichtet (spiegelt das erste)
+  triangle(
+    width/2, height/2 + groesse,      // unten
+    width/2 - groesse, height/2 - groesse,  // links oben
+    width/2 + groesse, height/2 - groesse   // rechts oben
+  );
   
   noStroke();
   fill(168, 218, 255);
