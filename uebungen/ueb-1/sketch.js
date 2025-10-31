@@ -1,3 +1,8 @@
+let bild;
+function preload(){
+bild = loadImage ("Images/Desiree.png");
+}
+
 let durchmesser;
 durchmesser=30;
 
@@ -8,7 +13,7 @@ let blauwert = 200;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
-
+image(bild,0,0,width,height);
 }
 
 function draw() {
