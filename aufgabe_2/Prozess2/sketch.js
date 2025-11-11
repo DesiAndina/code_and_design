@@ -8,7 +8,7 @@ function draw() {
   let size = 100;
   let h = size * Math.sqrt(3) / 2; // Höhe eines gleichseitigen Dreiecks
   
-  // Berechne wie viele Dreiecke horizontal und vertikal passen
+  // mehr Dreiecke horizontal und vertikal 
   let numCols = Math.ceil(windowWidth / size) + 20;
   let numRows = Math.ceil(windowHeight / h) + 20;
 
@@ -22,13 +22,13 @@ function draw() {
         x += size / 1;
       }
 
-      // Berechne Distanz zur Maus
+      // Distanz zur Maus
       let centerX = x;
       let centerY = y + h / 1.5;
       let distance = dist(mouseX, mouseY, centerX, centerY);
       let radius = 400; // Radius des Leucht-Effekts
       
-      // Berechne strokeWeight basierend auf Distanz
+      
       let weight;
       let lift = 0; // Wie viel das Dreieck angehoben wird
       let alpha = 255; // Transparenz

@@ -13,14 +13,14 @@ let posX, posY;
 let xSpeed, ySpeed;
 let radiusHighlight = 400;
 
-// Zeichen-Layer (behält Spuren)
+// Zeichen-Layer
 let ink;
 
 function setup() {
 
   const cnv = createCanvas(windowWidth, windowHeight);
 
-  // Offscreen-Grafik für persistente Zeichenspuren
+ 
   ink = createGraphics(windowWidth, windowHeight);
   ink.clear();
 
@@ -34,12 +34,11 @@ function setup() {
   sizeASlider = createSlider(0, 100, 50, 1);
   sizeASlider.position(50, 100);
 
-  sizeBSlider = createSlider(0, 100, 50, 1); // Neuer Slider für Grösse B
+  sizeBSlider = createSlider(0, 100, 50, 1); // 
   sizeBSlider.position(50, 150);
 
   calculateTrianglePos();
 
-  // Startposition und Geschwindigkeit des Movers
   posX = width / 2;
   posY = height / 2;
   xSpeed = random(-3, 3);
@@ -61,7 +60,7 @@ function updateMover() {
 }
 
 function draw() {
-  // Transparent neu zeichnen (kein Hintergrund)
+ 
   clear();
 
   updateMover();
@@ -252,7 +251,7 @@ function calculateTrianglePos() {
 function isMouseOverTriangle(mx, my, rotationDeg, scaleFactor) {
   if (scaleFactor === 0) return false;
 
-  const rad = -rotationDeg; // wegen angleMode(DEGREES) direkt in Grad
+  const rad = -rotationDeg; // 
   const cosR = cos(rad);
   const sinR = sin(rad);
 
@@ -282,7 +281,7 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   clear();
 
-  // Offscreen-Grafik neu anlegen (alte Spuren gehen dabei verloren)
+
   ink = createGraphics(windowWidth, windowHeight);
   ink.clear();
 }

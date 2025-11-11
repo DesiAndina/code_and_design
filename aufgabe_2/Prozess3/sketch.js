@@ -28,7 +28,7 @@ function draw() {
   background(255);
   updateMover();
 
-  // Optional: visualize moving center
+
   noStroke();
   noFill();
   ellipse(posX, posY, 20, 20);
