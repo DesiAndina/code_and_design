@@ -66,62 +66,71 @@ function draw() {
   // Zeichne nur, wenn das Modell bereit ist und Hände erkannt wurden
   if (isModelReady) {
     
-    // ROTE ELLIPSE DIE DER HAND FOLGT
-    for (let i = 0; i < hands.length; i++) {
-      let hand = hands[i];
-      
-      // Berechne Zentrum der Hand (mittelfinger - Keypoint 9)
-      let center = hand.keypoints[9];
-      
-      // Zeichne rote Ellipse
-      fill(255, 0, 0, 150); // Rot mit Transparenz
+    // Fester roter Kreis in der Mitte, Größe abhängig vom Abstand zur Kamera
+    if (hands.length > 0) {
+      const hand = hands[0]; // nur die erste Hand für die Größenbestimmung
+
+      // Schätze Abstand über Handbreite (Keypoints 5 und 17)
+      const p5 = hand.keypoints[5];
+      const p17 = hand.keypoints[17];
+      const palmWidth = dist(p5.x * ratio, p5.y * ratio, p17.x * ratio, p17.y * ratio);
+
+      // Map: größere Handbreite => größerer Kreis
+      const size = constrain(map(palmWidth, 40, 220, 80, 360), 60, 400);
+
+      fill(255, 0, 0, 150);
       noStroke();
-      ellipse(center.x * ratio, center.y * ratio, 200, 200);
+      ellipse(width / 2, height / 2, size, size);
+    } else {
+      // Optional: Standardgröße, wenn keine Hand erkannt wird
+      fill(255, 0, 0, 150);
+      noStroke();
+      ellipse(width / 2, height / 2, 120, 120);
     }
     
     drawHandPoints();
     for (let i = 0; i < hands.length; i++) {
-    let hand = hands[i];
-    
-    // Definiere die Verbindungen zwischen Keypoints (Knochen der Hand)
-    const connections = [
-      [0, 1], [1, 2], [2, 3], [3, 4],       // Daumen
-      [0, 5], [5, 6], [6, 7], [7, 8],       // Zeigefinger
-      [0, 9], [9, 10], [10, 11], [11, 12],  // Mittelfinger
-      [0, 13], [13, 14], [14, 15], [15, 16],// Ringfinger
-      [0, 17], [17, 18], [18, 19], [19, 20] // Kleiner Finger
-    ];
-    
-    // Zeichne die Verbindungen zwischen Keypoints
-    stroke(200, 200, 200); // Hellgraue Linien
-    strokeWeight(2);
-    for (let conn of connections) {
-      let p1 = hand.keypoints[conn[0]];
-      let p2 = hand.keypoints[conn[1]];
-      line(p1.x * ratio, p1.y * ratio, p2.x * ratio, p2.y * ratio);
-    }
-    
-    // Durchlaufe alle 21 Keypoints einer Hand
-    for (let j = 0; j < hand.keypoints.length; j++) {
-      let keypoint = hand.keypoints[j];
+      let hand = hands[i];
       
-      // Fingerspitzen sind die Keypoints: 4, 8, 12, 16, 20
-      let isFingertip = [4, 8, 12, 16, 20].includes(j);
+      // Definiere die Verbindungen zwischen Keypoints (Knochen der Hand)
+      const connections = [
+        [0, 1], [1, 2], [2, 3], [3, 4],       // Daumen
+        [0, 5], [5, 6], [6, 7], [7, 8],       // Zeigefinger
+        [0, 9], [9, 10], [10, 11], [11, 12],  // Mittelfinger
+        [0, 13], [13, 14], [14, 15], [15, 16],// Ringfinger
+        [0, 17], [17, 18], [18, 19], [19, 20] // Kleiner Finger
+      ];
       
-  
-      if (isFingertip) {
-        // Fingerspitzen in rot
-        fill(255, 0, 0);
-        noStroke();
-        circle(keypoint.x * ratio, keypoint.y * ratio, 20); // Größere Fingerspitzen
-      } else {
-        // Andere Keypoints in olivgrün
-        fill(128, 128, 0);
-        noStroke();
-        circle(keypoint.x * ratio, keypoint.y * ratio, 10); // Normale Größe
+      // Zeichne die Verbindungen zwischen Keypoints
+      stroke(200, 200, 200); // Hellgraue Linien
+      strokeWeight(2);
+      for (let conn of connections) {
+        let p1 = hand.keypoints[conn[0]];
+        let p2 = hand.keypoints[conn[1]];
+        line(p1.x * ratio, p1.y * ratio, p2.x * ratio, p2.y * ratio);
       }
       
-      noStroke();
+      // Durchlaufe alle 21 Keypoints einer Hand
+      for (let j = 0; j < hand.keypoints.length; j++) {
+        let keypoint = hand.keypoints[j];
+        
+        // Fingerspitzen sind die Keypoints: 4, 8, 12, 16, 20
+        let isFingertip = [4, 8, 12, 16, 20].includes(j);
+        
+  
+        if (isFingertip) {
+          // Fingerspitzen in rot
+          fill(255, 0, 0);
+          noStroke();
+          circle(keypoint.x * ratio, keypoint.y * ratio, 20); // Größere Fingerspitzen
+        } else {
+          // Andere Keypoints in olivgrün
+          fill(128, 128, 0);
+          noStroke();
+          circle(keypoint.x * ratio, keypoint.y * ratio, 10); // Normale Größe
+        }
+        
+        noStroke();
     circle(keypoint.x * ratio, keypoint.y * ratio, 10);
   }
 }

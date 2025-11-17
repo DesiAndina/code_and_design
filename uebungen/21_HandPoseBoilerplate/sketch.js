@@ -65,20 +65,6 @@ function draw() {
   
   // Zeichne nur, wenn das Modell bereit ist und Hände erkannt wurden
   if (isModelReady) {
-    
-    // ROTE ELLIPSE DIE DER HAND FOLGT
-    for (let i = 0; i < hands.length; i++) {
-      let hand = hands[i];
-      
-      // Berechne Zentrum der Hand (mittelfinger - Keypoint 9)
-      let center = hand.keypoints[9];
-      
-      // Zeichne rote Ellipse
-      fill(255, 0, 0, 150); // Rot mit Transparenz
-      noStroke();
-      ellipse(center.x * ratio, center.y * ratio, 200, 200);
-    }
-    
     drawHandPoints();
     for (let i = 0; i < hands.length; i++) {
     let hand = hands[i];
@@ -120,17 +106,19 @@ function draw() {
         noStroke();
         circle(keypoint.x * ratio, keypoint.y * ratio, 10); // Normale Größe
       }
+// ...existing code...
       
       noStroke();
-    circle(keypoint.x * ratio, keypoint.y * ratio, 10);
+      circle(keypoint.x * ratio, keypoint.y * ratio, 10);
+    }
   }
 }
-  // HIER KÖNNEN EIGENE/Andere ZEICHNUNGEN Oder Interaktionen HINZUGEFÜGT WERDEN
+    // HIER KÖNNEN EIGENE/Andere ZEICHNUNGEN Oder Interaktionen HINZUGEFÜGT WERDEN
     
   }
   
   pop();
-}
+
 
 /**
  * Callback-Funktion für HandPose-Ergebnisse

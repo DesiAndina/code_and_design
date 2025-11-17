@@ -30,14 +30,14 @@ function draw() {
 
 
   noStroke();
-  noFill();
+  fill(0);
   ellipse(posX, posY, 20, 20);
 
-  let size = 100;
+  let size = 50;
   let h = size * Math.sqrt(3) / 2;
 
-  let numCols = Math.ceil(windowWidth / size) + 20;
-  let numRows = Math.ceil(windowHeight / h) + 20;
+  let numCols = Math.ceil(windowWidth / size) + 120;
+  let numRows = Math.ceil(windowHeight / h) + 120;
 
   for (let row = 0; row < numRows; row++) {
     for (let col = 0; col < numCols; col++) {

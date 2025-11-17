@@ -70,13 +70,21 @@ function draw() {
     for (let i = 0; i < hands.length; i++) {
       let hand = hands[i];
       
-      // Berechne Zentrum der Hand (mittelfinger - Keypoint 9)
+      // Zentrum der Hand (Mittelfinger-Basis - Keypoint 9)
       let center = hand.keypoints[9];
-      
-      // Zeichne rote Ellipse
-      fill(255, 0, 0, 150); // Rot mit Transparenz
+
+      // Schätze Abstand zur Kamera über Handbreite (Palmbasis: Keypoints 5 und 17)
+      const p5 = hand.keypoints[5];
+      const p17 = hand.keypoints[17];
+      const palmWidth = dist(p5.x * ratio, p5.y * ratio, p17.x * ratio, p17.y * ratio);
+
+      // Map: größere Handbreite => größere Ellipse
+      const size = constrain(map(palmWidth, 40, 220, 80, 360), 60, 400);
+
+      // Zeichne rote Ellipse mit dynamischer Größe
+      fill(255, 0, 0, 150);
       noStroke();
-      ellipse(center.x * ratio, center.y * ratio, 200, 200);
+      ellipse(center.x * ratio, center.y * ratio, size, size);
     }
     
     drawHandPoints();
